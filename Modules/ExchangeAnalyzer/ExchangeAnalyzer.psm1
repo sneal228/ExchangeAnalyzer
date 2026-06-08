@@ -34,7 +34,7 @@ Function Get-TestResultObject()
     #A test can only pass if there are items in $passedlist and no failed, warning, or info items 
     if ($PassedList -and -not $FailedList -and -not $WarningList -and -not $InfoList)
     {
-        $TestComments = ($ExchangeAnalyzerTests.Test | Where {$_.Id -eq $TestID}).IfPassedComments
+        $TestComments = ($ExchangeAnalyzerTests.Test | Where-Object {$_.Id -eq $TestID}).IfPassedComments
         $TestOutcome = "Passed"
     }
 
@@ -121,14 +121,14 @@ Function Get-ExchangeBuildNumbers()
             {
                 $cells = @($row.Cells)
 
-                ## If we’ve found a table header, remember its titles
+                ## If weï¿½ve found a table header, remember its titles
                 if($cells[0].tagName -eq "TH")
                 {
                     $titles = @($cells | ForEach-Object { ("" + $_.InnerText).Trim() })
                     continue
                 }
 
-                ## If we haven’t found any table headers, make up names "P1", "P2", etc.
+                ## If we havenï¿½t found any table headers, make up names "P1", "P2", etc.
                 if(-not $titles)
                 {
                     $titles = @(1..($cells.Count + 2) | ForEach-Object { "P$_" })
